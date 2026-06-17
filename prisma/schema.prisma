@@ -1,0 +1,217 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/* Products and Categories */
+
+model Product {
+  id           String    @id @default(uuid())
+
+  name         String  
+  costPrice    Decimal   @map("cost_price") @db.Decimal(10, 2)
+  sellingPrice Decimal   @map("selling_price") @db.Decimal(10, 2)
+  stock        Int       @default(0)
+
+  imageUrl     String?   @map("image_url")
+
+  categoryId   String?   @map("category_id")
+  category     Category? @relation(fields: [categoryId], references: [id])
+
+  userId       String    @map("user_id")
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@unique([userId, name])
+  @@map("products")
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  products Product[]
+
+  @@map("categories")
+}
+
+/* Users and Refresh Tokens */
+
+model User {
+  id                String     @id               @default(uuid())
+
+  username          String     @unique
+  email             String?    @unique
+  hashedPassword    String     @map("hashed_password")
+
+  isEmailVerified   Boolean    @default(false)   @map("is_email_verified")
+
+  createdAt         DateTime   @default(now())   @map("created_at")
+  
+  products Product[]
+  refreshTokens RefreshToken[]
+  transactions Transaction[]
+  customers Customer[]
+  payments CustomerPayment[]
+  
+  @@map("users")
+}
+
+model RefreshToken {
+  id                        String      @id                      @default(uuid())
+  hashedRefreshToken        String      @unique                  @map("hashed_refresh_token")
+
+  userId                    String      @map("user_id")
+  user                      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  deviceId                  String      @map("device_id")
+  deviceName                String?
+
+  createdAt                 DateTime    @default(now())          @map("created_at")
+  expiresAt                 DateTime    @map("expires_at")
+
+  @@index([userId])
+  @@unique([userId, deviceId])
+  @@map("refresh_tokens")
+}
+
+/* Transactions */
+
+enum TransactionType {
+  SALE
+  CREDIT
+  CONSUMPTION
+  LOSS
+}
+
+enum PaymentMethod {
+  CASH
+  E_WALLET
+  OTHER
+}
+
+enum CreditStatus {
+  UNPAID
+  PARTIAL
+  PAID
+}
+
+model Customer {
+  id                   String                 @id                 @default(uuid())
+  name                 String                 
+  contact              String?
+  createdAt            DateTime               @default(now())     @map("created_at")
+  lastActivityAt       DateTime?
+
+  userId               String                 @map("user_id")
+  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions         Transaction[]
+  payments             CustomerPayment[]
+
+  @@unique([userId, name])
+  @@index([userId])
+  @@map("customers")    
+}
+
+model Transaction {
+  id                   String                 @id                    @default(uuid())
+  type                 TransactionType
+
+  userId               String                 @map("user_id")
+  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  customerId           String?                @map("customer_id")
+  customer             Customer?              @relation(fields: [customerId], references: [id])
+  
+  totalRevenue         Decimal                @db.Decimal(10, 2)     @map("total_revenue")
+  totalCost            Decimal                @db.Decimal(10, 2)     @map("total_cost")
+  totalProfit          Decimal                @db.Decimal(10, 2)     @map("total_profit")
+
+  creditFee            Decimal?               @db.Decimal(10,2)      @map("credit_fee")        
+  creditStatus         CreditStatus?          @map("credit_status")
+  remainingBalance     Decimal?               @db.Decimal(10,2)      @map("remaining_balance")
+
+  notes                String?
+
+  createdAt            DateTime               @default(now())        @map("created_at")
+
+  items                TransactionItem[]
+  paymentAllocations PaymentAllocation[]
+
+  @@index([userId])
+  @@index([customerId])
+  @@map("transactions")
+}
+
+model TransactionItem {
+  id                   String                 @id                    @default(uuid())
+
+  transactionId        String                 @map("transaction_id")
+  transaction          Transaction            @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  productId            String?                @map("product_id")
+  productName          String                 @map("product_name")
+
+  costEach             Decimal                @db.Decimal(10, 2)
+  priceEach            Decimal                @db.Decimal(10, 2)
+
+  quantity             Int
+  
+  totalRevenue         Decimal                @db.Decimal(10, 2)     @map("total_revenue")
+  totalCost            Decimal                @db.Decimal(10, 2)     @map("total_cost")
+  totalProfit          Decimal                @db.Decimal(10, 2)     @map("total_profit")
+
+  createdAt            DateTime               @default(now())        @map("created_at")
+
+  @@index([transactionId])
+  @@map("transaction_items")              
+}
+
+model CustomerPayment {
+  id                   String                 @id                    @default(uuid())
+  
+  customerId           String                 @map("customer_id")
+  customer             Customer               @relation(fields: [customerId], references: [id])
+
+  userId               String                 @map("user_id")
+  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  amount               Decimal                @db.Decimal(10, 2)
+  method               PaymentMethod          @default(CASH)
+
+  notes                String?
+
+  createdAt            DateTime               @default(now())        @map("created_at")
+
+  paymentAllocations PaymentAllocation[]
+
+  @@index([customerId])
+  @@index([userId])
+  @@map("customer_payments") 
+}
+
+model PaymentAllocation {
+  id                   String                 @id                    @default(uuid())
+
+  paymentId            String                 @map("payment_id")
+  payment              CustomerPayment        @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  transactionId        String                 @map("transaction_id")
+  transaction          Transaction            @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  amountApplied        Decimal                @db.Decimal(10,2)
+
+  createdAt            DateTime               @default(now())        @map("created_at")
+
+  @@index([transactionId])
+  @@index([paymentId])
+  @@map("payment_allocations")
+}
