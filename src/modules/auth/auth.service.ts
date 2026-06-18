@@ -14,6 +14,8 @@ import AppError from '../../shared/error/AppError.js';
 import comparePassword from './utils/comparePassword.js';
 import hashRefreshToken from './utils/hashRefreshToken.js';
 
+import { Prisma } from "@prisma/client";
+
 const authService = {
     register: async ({ username, password, email }: RegisterInput) => {
         // 1. Check if Username or Email Already Exist

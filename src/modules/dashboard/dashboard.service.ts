@@ -99,7 +99,7 @@ const dashboardService = {
         const inventoryCostValue = products.reduce((sum, product) => sum + (Number(product.costPrice) * product.stock), 0);
         const inventorySellingValue = products.reduce((sum, product) => sum + (Number(product.sellingPrice) * product.stock), 0);
         const potentialProfit = inventorySellingValue - inventoryCostValue;
-        const potentialMargin = ((potentialProfit / inventorySellingValue) * 100).toFixed(2);
+        const potentialMargin = inventorySellingValue === 0 ? 0 : Number((potentialProfit / inventorySellingValue) * 100).toFixed(2);
         const outOfStockProducts = products.filter(product => product.stock === 0).length;
         const lowStockProducts = products.filter(product => product.stock < 5 && product.stock > 0).length;
 
