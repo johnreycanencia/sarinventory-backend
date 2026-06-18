@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../../../shared/error/AppError.js";
-import { SignupSchema } from "../auth.schema.js";
+import { LoginSchema } from "../auth.schema.js";
 import { z } from "zod";
 
-export default function registerInputValidator(req: Request, res: Response, next: NextFunction) {
+export default function loginInputValidator(req: Request, res: Response, next: NextFunction) {
     try {
-        const validatedData = SignupSchema.parse(req.body);
+        const validatedData = LoginSchema.parse(req.body);
         req.body = validatedData;
         next();
     } catch (error) {

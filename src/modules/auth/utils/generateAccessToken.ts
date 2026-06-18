@@ -8,7 +8,7 @@ export default function generateAccessToken(uid: string) {
     const SECRET_KEY = process.env.JWT_ACCESS_SECRET;
 
     if (!SECRET_KEY) {
-        throw new Error("JWT_SECRET is not defined in the environment variables.");
+        throw new Error("JWT_ACCESS_SECRET is not defined in the environment variables.");
     }
 
     const accessToken = jwt.sign(

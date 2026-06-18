@@ -2,6 +2,7 @@ import { Router } from "express";
 import authController from "./auth.controller.js";
 import cookieRefreshTokenExist from "./middleware/cookieRefreshTokenExist.js";
 import registerInputValidator from "./middleware/registerInputValidator.js";
+import loginInputValidator from "./middleware/loginInputValidator.js";
 import rateLimit from "express-rate-limit";
 
 const loginLimiter = rateLimit({
@@ -23,7 +24,7 @@ const registerLimiter = rateLimit({
 const authRouter = Router();
 
 authRouter.post("/register", registerLimiter, registerInputValidator, authController.register);
-authRouter.post("/login", loginLimiter, authController.login);
+authRouter.post("/login", loginLimiter, loginInputValidator, authController.login);
 authRouter.post("/refresh", cookieRefreshTokenExist, authController.refresh); // Include Frontend Credentials
 authRouter.post("/logout", cookieRefreshTokenExist, authController.logout);
 

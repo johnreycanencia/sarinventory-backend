@@ -3,7 +3,7 @@ import { z } from 'zod';
 // Schema
 
 export const RegisterSchema = z.object({
-  username: z.string().toLowerCase(),
+  username: z.string().trim().toLowerCase(),
   password: z.string().min(6),
   email: z.string().email().toLowerCase(),
 });
@@ -22,12 +22,14 @@ export const SaveRefreshTokenSchema = z.object({
 });
 
 export const LoginSchema = z.object({
-  identifier: z.string().toLowerCase(),
-  password: z.string().min(6),
+  identifier: z.string().trim().toLowerCase(),
+  password: z.string(),
 });
 
 const usernameSchema = z
   .string()
+  .trim()
+  .toLowerCase()
   .min(4, 'Username must be at least 4 characters long')
   .max(20, 'Username cannot exceed 20 characters')
   .regex(/^[a-zA-Z0-9._*-]+$/, 'Username can only contain letters, numbers, and [ . _ - * ]')
@@ -35,6 +37,8 @@ const usernameSchema = z
 
 const emailSchema = z
   .string()
+  .trim()
+  .toLowerCase()
   .email('Please enter a valid email address')
   .optional();
 
