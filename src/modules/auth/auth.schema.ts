@@ -23,7 +23,7 @@ export const SaveRefreshTokenSchema = z.object({
 
 export const LoginSchema = z.object({
   identifier: z.string().trim().toLowerCase(),
-  password: z.string(),
+  password: z.string().trim(),
 });
 
 const usernameSchema = z
@@ -44,6 +44,7 @@ const emailSchema = z
 
 const passwordSchema = z
   .string()
+  .trim()
   .min(8, 'Password must be at least 8 characters long')
   .max(100, 'Password is too long');
 
