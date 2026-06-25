@@ -9,13 +9,15 @@ const authController = {
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "none", // set to strict after obtaining a custom domain
+            sameSite: "lax",
+            domain: ".sarinventory.com",
         });
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "none", // set to strict after obtaining a custom domain
+            sameSite: "lax",
+            domain: ".sarinventory.com",
         });
 
         return res.status(201).json({
@@ -37,13 +39,15 @@ const authController = {
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "none", // set to strict after obtaining a custom domain
+            sameSite: "lax",
+            domain: ".sarinventory.com",
         });
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "none", // set to strict after obtaining a custom domain
+            sameSite: "lax",
+            domain: ".sarinventory.com",
         });
 
         return res.status(200).json({
@@ -77,13 +81,15 @@ const authController = {
         res.cookie("refreshToken", tokens?.refreshToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "none", // set to strict after obtaining a custom domain
+            sameSite: "lax",
+            domain: ".sarinventory.com",
         });
 
         res.cookie("accessToken", tokens?.accessToken, {
             httpOnly: true,
             secure: true,
-            sameSite: "none", // set to strict after obtaining a custom domain
+            sameSite: "lax",
+            domain: ".sarinventory.com",
         });
 
         return res.status(200).json({

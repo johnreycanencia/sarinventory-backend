@@ -20,7 +20,11 @@ const app = express();
 app.set('trust proxy', 1);
 
 // security
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || "https://sarinventory.vercel.app").split(",");
+const allowedOrigins = [
+    ...(process.env.ALLOWED_ORIGINS || "https://sarinventory.vercel.app").split(","),
+    "https://sarinventory.com",
+    "https://www.sarinventory.com",
+];
 const corsOptions: cors.CorsOptions = {
     origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
         if (!origin || allowedOrigins.includes(origin)) {
