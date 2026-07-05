@@ -10,14 +10,14 @@ const authController = {
             httpOnly: true,
             secure: true,
             sameSite: "lax",
-            domain: ".sarinventory.com",
+            domain: process.env.NODE_ENV === "development" ? undefined : ".sarinventory.com",
         });
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
             secure: true,
             sameSite: "lax",
-            domain: ".sarinventory.com",
+            domain: process.env.NODE_ENV === "development" ? undefined : ".sarinventory.com",
         });
 
         return res.status(201).json({
@@ -40,14 +40,14 @@ const authController = {
             httpOnly: true,
             secure: true,
             sameSite: "lax",
-            domain: ".sarinventory.com",
+            domain: process.env.NODE_ENV === "development" ? undefined : ".sarinventory.com",
         });
 
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
             secure: true,
             sameSite: "lax",
-            domain: ".sarinventory.com",
+            domain: process.env.NODE_ENV === "development" ? undefined : ".sarinventory.com",
         });
 
         return res.status(200).json({
@@ -82,14 +82,14 @@ const authController = {
             httpOnly: true,
             secure: true,
             sameSite: "lax",
-            domain: ".sarinventory.com",
+            domain: process.env.NODE_ENV === "development" ? undefined : ".sarinventory.com",
         });
 
         res.cookie("accessToken", tokens?.accessToken, {
             httpOnly: true,
             secure: true,
             sameSite: "lax",
-            domain: ".sarinventory.com",
+            domain: process.env.NODE_ENV === "development" ? undefined : ".sarinventory.com",
         });
 
         return res.status(200).json({
