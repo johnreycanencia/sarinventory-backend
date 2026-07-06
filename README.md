@@ -61,7 +61,7 @@ Sarinventory Backend is a backend service for the Sarinventory web application. 
    ```
 
 ## Internal Documentation
-For detailed internal documentation, /docs folder contains the following files:
+For detailed internal documentation, please refer to the following files in the `docs` directory:
 - `api.md`: Contains information about the available APIs, their endpoints, request/response formats.
 - `database.md`: Contains information about the database schema, tables, and relationships.
 - `authentication.md`: Contains information about the authentication flow, JWT usage, and security considerations.
