@@ -43,7 +43,7 @@ The following diagrams illustrate the overall architecture of the backend servic
 
 - The backend service follows a 3-tier architecture, consisting of the frontend client, backend service, and database.
 
-![High-Level Architecture Diagram](./images/high-level-architecture.png)
+![High-Level Architecture Diagram](./images/3-Tier-Architecture.png)
 
 Frontend Client: The frontend application is built using Next.js and communicates with the backend service through RESTful APIs.
 Backend Service: The backend service is built using Express.js and handles incoming requests, processes business logic, and interacts with the database.
@@ -53,22 +53,22 @@ Database: The database is managed using PostgreSQL and Prisma ORM.
 
 - The use case diagram illustrates the interactions between users and the backend service, highlighting the main functionalities provided by the application.
 
-![Use Case Diagram](./images/use-case-diagram.png)
+![Use Case Diagram](./images/Use-Case-Diagram.png)
 
 ### 3. Data Flow Diagram (Level 0)
 
 - The level 0 data flow diagram provides a high-level overview of the data flow within the backend service, showing how requests are processed and how data is retrieved from the database.
 
-![Data Flow Diagram (Level 0)](./images/data-flow-diagram-level-0.png)
+![Data Flow Diagram (Level 0)](./images/L0-DFD-Diagram.png)
 
 ### 4. Data Flow Diagram (Level 1)
 
 - The level 1 data flow diagram provides a more detailed view of the data flow within the backend service, showing how requests are processed and how data is retrieved from the database.
 
-![Data Flow Diagram (Level 1)](./images/data-flow-diagram-level-1.png)
+![Data Flow Diagram (Level 1)](./images/L1-DFD-Diagram.png)
 
 ### 5. Entity-Relationship Diagram (ERD)
 
 - The entity-relationship diagram illustrates the relationships between different entities in the database, providing a visual representation of the data structure.
 
-![Entity-Relationship Diagram (ERD)](./images/entity-relationship-diagram.png)
+![Entity-Relationship Diagram (ERD)](./images/Entity-Relationship-Diagram.png)
