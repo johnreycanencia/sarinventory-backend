@@ -184,3 +184,240 @@ Description: Logout a user and clear authentication cookies.
   "message": "Logout successful"
 }
 ```
+
+## Products
+
+### Get All Products
+
+Description: Retrieve a list of all products in the inventory.
+
+Requires authentication via `accessToken` and `refreshToken` cookies
+
+Note: The credentials `include` option in the request indicates that the request should include credentials, such as cookies, for authentication.
+
+**Endpoint:** `/api/products`
+
+**Method:** `GET`
+
+**Credentials:** `include` 
+
+**Success Response:**
+
+**Code:** `200 OK`
+
+**Content:**
+```json
+{
+  "success": true,
+  "message": "Products Retrieved",
+  "data": {
+    "products": [
+      {
+        "id": "string",
+        "name": "string",
+        "costPrice": 0,
+        "sellingPrice": 0,
+        "imageUrl": "string" || null,
+        "stock": 0,
+        "createdAt": "2024-06-01T00:00:00.000Z",
+        "updatedAt": "2024-06-01T00:00:00.000Z",
+        "categoryId": "string" || null,
+        "category": {
+          "id": "string",
+          "name": "string",
+        } || null
+      }
+    ]
+  }
+}
+```
+
+### Get Product by ID
+
+Description: Retrieve details of a specific product by its ID.
+
+**Endpoint:** `/api/products/{id}`
+
+**Method:** `GET`
+
+**Credentials:** `include`
+
+**Success Response:**
+
+**Code:** `200 OK`
+
+**Content:**
+```json
+{
+  "success": true,
+  "message": "Product Retrieved",
+  "data": {
+    "product": {
+      "id": "string",
+      "name": "string",
+      "costPrice": 0,
+      "sellingPrice": 0,
+      "imageUrl": "string",
+      "stock": 0,
+      "createdAt": "2024-06-01T00:00:00.000Z",
+      "updatedAt": "2024-06-01T00:00:00.000Z",
+      "categoryId": "string" || null,
+      "category": {
+        "id": "string",
+        "name": "string",
+      } || null
+    }
+  }
+}
+```
+
+**Error Response:**
+
+Product not found
+
+**Code:** `404 Not Found`
+**Content:**
+```json
+{
+  "success": false,
+  "error": {
+    "message": "Product Not Found",
+    "code": "NOT_FOUND"
+  }
+}
+```
+
+### Insert Product
+
+Description: Insert a new product into the inventory.
+
+**Endpoint:** `/api/products`
+
+**Method:** `POST`
+
+**Credentials:** `include`
+
+**Request Body:**
+```json
+{
+  "name": "string",
+  "costPrice": number,
+  "sellingPrice": number,
+  "stock": number,
+  "imageUrl"?: "string" || null,
+  "categoryId"?: "string" || null
+}
+```
+
+**Success Response:**
+
+**Code:** `201 Created`
+
+**Content:**
+```json
+{
+  "success": true,
+  "message": "Product Added",
+  "data": {
+    "product": {
+      "id": "string",
+      "name": "string",
+      "costPrice": 0,
+      "sellingPrice": 0,
+      "imageUrl": "string" || null,
+      "stock": 0,
+      "createdAt": "2024-06-01T00:00:00.000Z",
+      "updatedAt": "2024-06-01T00:00:00.000Z",
+      "categoryId": "string" || null,
+      "category": {
+        "id": "string",
+        "name": "string",
+      } || null
+    }
+  }
+}
+```
+
+### Partial Update Product
+
+Description: Partially update an existing product in the inventory.
+
+**Endpoint:** `/api/products/{id}`
+
+**Method:** `PATCH`
+
+**Credentials:** `include`
+
+**Request Body:**
+```json
+{
+  "name"?: "string",
+  "costPrice"?: number,
+  "sellingPrice"?: number,
+  "stock"?: number,
+  "imageUrl"?: "string" || null,
+  "categoryId"?: "string" || null
+}
+```
+
+**Success Response:**
+
+**Code:** `200 OK`
+
+**Content:**
+```json
+{
+  "success": true,
+  "message": "Product Updated",
+  "data": {
+    "product": {
+      "id": "string",
+      "name": "string",
+      "costPrice": 0,
+      "sellingPrice": 0,
+      "imageUrl": "string" || null,
+      "stock": 0,
+      "createdAt": "2024-06-01T00:00:00.000Z",
+      "updatedAt": "2024-06-01T00:00:00.000Z",
+      "categoryId": "string" || null,
+      "userId": "string",
+    }
+  }
+}
+```
+
+### Delete Product
+
+Description: Delete an existing product from the inventory.
+
+**Endpoint:** `/api/products/{id}`
+
+**Method:** `DELETE`
+
+**Credentials:** `include`
+
+**Success Response:**
+
+**Code:** `200 OK`
+
+**Content:**
+```json
+{
+  "success": true,
+  "message": "Product Deleted"
+  "data": {
+    "product": {
+      "id": "string",
+      "name": "string",
+      "costPrice": 0,
+      "sellingPrice": 0,
+      "imageUrl": "string" || null,
+      "stock": 0,
+      "createdAt": "2024-06-01T00:00:00.000Z",
+      "updatedAt": "2024-06-01T00:00:00.000Z",
+      "categoryId": "string" || null,
+      "userId": "string",
+    }
+  }
+}
+```

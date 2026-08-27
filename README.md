@@ -68,4 +68,4 @@ For detailed internal documentation, please refer to the following files in the 
 - `error.md`: Contains information about error handling, error codes, and error response formats.
 - `architecture.md`: Contains information about the overall architecture of the backend service, including the folder structure, modules, and components.
 - `security.md`: Contains information about security best practices, including password hashing, token expiration, and secure cookie handling.
-- `deployment.md`: Contains information about deploying the backend service to different environments, including production and staging.
+- `deployment.md`: Contains information about deploying the backend service on various platforms, including Render and Supabase.
